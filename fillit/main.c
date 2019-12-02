@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/11/29 17:00:10 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:37:45 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_error(int i)
 	exit(0);
 }
 
-tetrimino	*create(char c, int a[4])
+t_tetrimino	*create(char c, int a[4])
 {
 	int j;
 
@@ -88,6 +88,47 @@ int	check_line(char *line)
 	}
 	return(1);
 }
+
+void	fix_coordinates(int **arr)
+{	
+	int i;
+	int l;
+	int p;
+	int rem;
+
+	i = 0;
+	while (arr[i][0] != -1)
+	{
+		while (arr[i][0] > 3)
+		{
+			l = 0;
+			while (l < 4)
+			{
+				arr[i][l] -= 4;
+				l++;
+			}
+		}
+		p = 3;
+		while (p != 0)
+		{
+			l = 0;
+			while (l < 4)
+			{
+				if (arr[i][l] % 4 < p)
+					p = arr[i][l] % 4;
+				l++;
+			}
+			l = 0;
+			if (p != 0)
+				while (l < 4)
+				{
+					arr[i][l] -= 1;
+					l++;
+				}
+		}
+		i++;
+	}
+
 void	check_coordinates(char **s)
 {
 	int arr[26][4];
@@ -117,6 +158,7 @@ void	check_coordinates(char **s)
 		k++;
 	}
 	arr[k][0] = -1;
+	fix_coordinates(arr);
 	create_list(arr);
 }
 /*void	check_tetromino(char **str)
