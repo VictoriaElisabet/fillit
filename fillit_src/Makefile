@@ -6,20 +6,19 @@
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 14:46:06 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 14:47:21 by phakakos         ###   ########.fr        #
+#    Updated: 2019/12/04 17:48:34 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-SRC = main.c map.c
-OBJECTS = main.o map.o
-INC = get_next_line.h
+SRC = main.c map.c helpers.c
+OBJECTS = main.o map.o helpers.o
+INC = ../libft
 
 all: $(NAME)
 	
 $(NAME):
 	gcc -c -Wextra -Werror -Wall $(SRC) -I $(INC)
-	gcc -Wall -Wextra -Werror $(OBJECTS) -o $(NAME) -L ../libft/ -lft
 
 clean:
 	rm -f $(OBJECTS)
@@ -30,6 +29,6 @@ fclean: clean
 fclean : clean
 #		
 ofiles :
-		$(BIGO)
+		$(OBJECTS)
 
 re : fclean all

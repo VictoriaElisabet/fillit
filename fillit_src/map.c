@@ -6,44 +6,13 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 14:48:34 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:53:57 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int block_amount(t_tetrimino *start)
-{
-	int total;
-
-	if (!start)
-		return (0);
-	while (start->next)
-		start = start->next;
-	total = start->c - 'A' + 1;
-	return (total);
-}
-
-static char	*make_map(int size)
-{
-	char	*map;
-	int		total;
-	int		i;
-
-	total = size * (size + 1) + 1;
-	if (!(map = ft_strnew(total)))
-		print_error(-3);
-	ft_memset(map, '.', total - 1);
-	i = size;
-	while (i < (size * (size + 1)))
-	{
-		map[i] = '\n';
-		i += size + 1;
-	}
-	return (map);
-}
-
-static void map_undo(char **map, char c, char rep)
+static void	map_undo(char **map, char c, char rep)
 {
 	int i;
 
@@ -63,7 +32,6 @@ static int	map_space(char *map, t_tetrimino *current, int i)
 
 	dot = 0;
 	blocks = 0;
-	dot = 0;
 	while (current)
 	{
 		current = current->next;
@@ -78,12 +46,13 @@ static int	map_space(char *map, t_tetrimino *current, int i)
 	if (blocks * 4 > dot)
 		return (0);
 	else
-		return (0);
+		return (1);
 }
 
-static int	map_place(t_tetrimino *block, char *map, int y, int size)
+static int	map_place(char *map, t_tetrimino *block, int y, int size)
 {
 	int i;
+	int z;
 	int map_s;
 
 	i = 0;
@@ -93,8 +62,11 @@ static int	map_place(t_tetrimino *block, char *map, int y, int size)
 		return (0);
 	while (i < 4)
 	{
-		if (map[y + block->arr[i] / 4 * size + block->arr[i] % 4 - 4] == '.')
-			map[y + block->arr[i] / 4 * size + block->arr[i] % 4 - 4] = block->c;
+	//	if (block->arr[i] < 4 && map[y + block->arr[i]] == '.')
+	//		map[y + block->arr[i]] = block->c;
+		z = block->arr[i] / 4 * size + block->arr[i] % 4 - 4;
+		if (map[y + z] == '.')
+			map[y + z] = block->c;
 		else
 		{
 			map_undo(&map, block->c, '.');
@@ -105,26 +77,31 @@ static int	map_place(t_tetrimino *block, char *map, int y, int size)
 	return (1);
 }
 
-/*
- * first call with *start, 0, NULL, 0
- */
+static int	map_print(char *map)
+{
+system("clear");
+	ft_putstr(map);
+	ft_strdel(&map);
+	return (1);
+}
 
-int		map_solve(t_tetrimino *current, int size, char *map, int i)
+#include <unistd.h>
+
+int			map_solve(t_tetrimino *current, int size, char *map, int i)
 {
 	if (size == 0)
 		size = block_amount(current);
 	if (!map)
 		map = make_map(size);
+system("clear");
+ft_putstr(map);
+usleep(100000);
 	if (map_space(map, current, i))
 	{
-		if (map_place(current, map, i, size))
+		if (map_place(map, current, i, size))
 		{
 			if (!current->next)
-			{
-				ft_putstr(map);
-				ft_strdel(&map);
-				return (1);
-			}
+				return (map_print(map));
 			if (!map_solve(current->next, size, map, 0))
 			{
 				map_undo(&map, current->c, '.');
