@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/02 18:37:45 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:20:19 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_tetrimino	*create(char c, int a[4])
 	int j;
 
 	j = 0;
-	t_tetrimino *new = (tetrimino*)malloc(sizeof(tetrimino));
+	t_tetrimino *new = (t_tetrimino*)malloc(sizeof(t_tetrimino));
 	if (!new)
 		print_error(-3);
 	while (j < 4)
@@ -42,7 +42,7 @@ t_tetrimino	*create(char c, int a[4])
 	return (new);
 }
 
-void	append(tetrimino *head, int a[4], char c)
+void	append(t_tetrimino **head, int a[4], char c)
 {
 	t_tetrimino *cursor;
 
@@ -58,7 +58,7 @@ void	create_list(int a[26][4])
 {
 	int i;
 	char c;
-	tetrimino *head;
+	t_tetrimino *head;
 
 	c = 65;
 	i = 0;
@@ -68,7 +68,7 @@ void	create_list(int a[26][4])
 		if (!head)
 			head = create(c, a[i]);
 		else
-			append (head, a[i], c + i);
+			append (&head, a[i], c + i);
 		i++;
 	}
 }
@@ -78,7 +78,9 @@ int	check_line(char *line)
 	int i;
 
 	i = 0;
-	if (ft_strlen(line) > 4)
+	if (ft_strlen(line) == 0)
+		return (1);
+	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
 	{
@@ -89,12 +91,11 @@ int	check_line(char *line)
 	return(1);
 }
 
-void	fix_coordinates(int **arr)
+void	fix_coordinates(int arr[26][4])
 {	
 	int i;
 	int l;
 	int p;
-	int rem;
 
 	i = 0;
 	while (arr[i][0] != -1)
@@ -128,6 +129,7 @@ void	fix_coordinates(int **arr)
 		}
 		i++;
 	}
+}
 
 void	check_coordinates(char **s)
 {
@@ -157,32 +159,107 @@ void	check_coordinates(char **s)
 		i++;
 		k++;
 	}
+	ft_strdel(s);
 	arr[k][0] = -1;
 	fix_coordinates(arr);
 	create_list(arr);
 }
-/*void	check_tetromino(char **str)
+int	check_blocks(char **str)
 {
 	int i;
+	int j;
 	int count;
 
 	i = 0;
+	j = 0;
 	count = 0;
-	while (str[i] != '\0')
+	while(str[i] != NULL)
 	{
-		if (str[i] != '.' && str[i] != '#')
+		j = 0;
+		count = 0;
+		while(str[i][j] != '\0')
 		{
-			ft_strdel(&str);
-			print_error(-1);
+			if(str[i][j + 1] == '#')
+				count++;
+			else if (str[i][j - 1] == '#')
+				count++;
+			else if(str[i][j - 4] == '#')
+			   count++;
+			else if	(str[i][j + 4] == '#')
+				count++;
+			if (count > 1)
+				return (1);
+			j++;
 		}
-		if (str[i] == '#')
-			count++;
-		if (count > 4 && count < 4)
-			print_error(-1);
 		i++;
 	}
-	//check_coordinates(str);
-}*/
+	return (-1);	
+}
+void	check_tetrimino(char **str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (str[i] != NULL)
+	{
+		j = 0;
+		while (str[i][j] != '\0')
+		{
+			if (str[i][j] == '#')
+			{
+				if (str[i][j + 1] == '#' || str[i][j - 1] == '#' || str[i][j + 4] == '#' || str[i][j - 4] == '#')
+				{
+					if(check_blocks(str) == -1)
+						print_error(-1);
+				}
+				else
+					print_error(-1);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+void	check_tetrimino_characters(char **str)
+{
+	int i;
+	int j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (str[i] != NULL)
+	{
+		j = 0;
+		count = 0;
+		while (str[i][j] != '\0')
+		{
+		if (str[i][j] == '#')
+			count++;	
+		if (count > 4 && count < 4)
+			 print_error(-1);
+		j++;
+		}
+		i++;
+	}
+	check_tetrimino(str);
+}
+char	*join_lines(char *str, char *line)
+{
+	char *tmp;
+	
+	if (str == NULL)
+		if (!(str = ft_strnew(0)))
+			print_error(-3);
+	if (!(tmp = ft_strjoin(str, line)))
+		print_error(-3);
+	ft_strdel(&str);
+	str = tmp;
+	return (str);
+}
 
 void	check_file(int fd)
 {
@@ -190,30 +267,24 @@ void	check_file(int fd)
 	int i;
 	int j;
 	int k;
-	char *str;
-	char *tmp;
+	static char *str;
+	//char *tmp;
 	char *s[27];
 
 	i = 0;
 	j = 0;
 	k = 0;
-	str = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		j++;
 		if(check_line(line) == -1)
 			print_error(-1);
-		if (str == NULL)
-			if (!(str = ft_strnew(0)))
-				print_error(-3);
-		if (!(tmp = ft_strjoin(str, line)))
-			print_error(-3);
-		free(str);
-		str = tmp;
+		str = join_lines(str, line);
 		if (j == 4)
 		{
 			if (!(s[i] = ft_strsub(str, 0, ft_strlen(str))))
 				print_error(-3);
+			printf("%s\n", s[i]);
 			ft_strdel(&str);
 			j = 0;
 			i++;
@@ -221,6 +292,7 @@ void	check_file(int fd)
 		if (ft_strlen(line) == 0)
 		{
 			j = 0;
+			printf("hii");
 			k++;
 		}
 		if (k > 1)
@@ -229,7 +301,7 @@ void	check_file(int fd)
 	}
 	if (get_next_line(fd, &line) == -1)
 		print_error(-1);
-	//check_tetromino(s);
+	check_tetrimino_characters(s);
 	check_coordinates(s);
 }
 
@@ -241,6 +313,5 @@ int	main(int argc, char **argv)
 		print_error(-2);
 	fd = open(argv[1], O_RDONLY);
 	check_file(fd);
-	close(fd);
 	return(0);
 }
