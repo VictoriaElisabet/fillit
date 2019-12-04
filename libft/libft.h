@@ -6,12 +6,14 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:53:28 by phakakos          #+#    #+#             */
-/*   Updated: 2019/11/17 15:56:15 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:28:05 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFF_SIZE 64
+# define FD_LIMIT 4864
 # include <string.h>
 
 typedef struct	s_list
@@ -102,5 +104,6 @@ int				ft_isspace(char c);
 int				ft_iswspace(char c);
 int				ft_strequ(char const *s1, char const *s2);
 int				ft_strnequ(char const *s1, char const *s2, size_t n);
+int				get_next_line(const int fd, char **line);
 
 #endif

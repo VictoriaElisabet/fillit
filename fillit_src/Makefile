@@ -5,32 +5,29 @@
 #                                                     +:+ +:+         +:+      #
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/29 17:01:28 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 12:53:16 by phakakos         ###   ########.fr        #
+#    Created: 2019/12/04 12:30:30 by phakakos          #+#    #+#              #
+#    Updated: 2019/12/04 12:51:46 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME="fillit"
-LIBFT="./libft"
-FILLIT="./fillit_src"
-FLAGS="-Wall -Wextra -Werror"
-BIGO := $(shell make -C $(FILLIT) ofiles)
-
+NAME = fillit
+INC = -I ../libft 
+FLAGS = -Wall -Wextra -Werror
+SRCS = main.c map.c 
+BIGO = main.o map.o 
 
 all : $(NAME)
 
 $(NAME) :
-	make -C $(LIBFT) re
-	make -C $(FILLIT) re
-	gcc $(FLAGS) -o $(NAME) $(BIGO) -L libft -I $(LIBFT) -lft
-	#compile lib with the /fillit files
+		gcc $(FLAGS) $(INC) $(SRCS) -c
+#		gcc $(FLAGS) -o $(NAME) $(BIGO)
 
 clean :
-	make -C $(LIBFT) clean
-	make -C $(FILLIT) clean
+		rm -f $(BIGO)
 
 fclean : clean
-	rm $(NAME)
-	make -C $(LIBFT) fclean
+#		
+ofiles :
+		echo "$(BIGO)"
 
 re : fclean all
