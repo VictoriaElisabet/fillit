@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 12:20:19 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/04 13:06:53 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 void	print_error(int i)
 {
 	if (i == -1)
-		write(2, "error", 5);
+		ft_puterr("error");
 	else if (i == -2 )
-		write(1, "usage: fillit input_file", 24);
+		ft_putstr("usage: fillit input_file");
 	else if (i == -3)
-		write(2, "error: allocation failed", 24);
+		ft_puterr("error: allocation failed");
 	exit(0);
 }
 
