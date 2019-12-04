@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 12:20:19 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/04 14:49:02 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,17 @@ void	create_list(int a[26][4])
 	}
 }
 
-int	check_line(char *line)
+int	check_line(char *line, int fd, int count)
 {
 	int i;
 
 	i = 0;
+	fd = 0;
 	if (ft_strlen(line) == 0)
+	{
+		count = 0;
 		return (1);
+	}
 	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
@@ -265,38 +269,37 @@ void	check_file(int fd)
 {
 	char *line;
 	int i;
-	int j;
+	static int count;
 	int k;
 	static char *str;
 	//char *tmp;
 	char *s[27];
 
 	i = 0;
-	j = 0;
+	count = 0;
 	k = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
-		j++;
-		if(check_line(line) == -1)
+		count++;
+		if(check_line(line, fd, count) == -1)
 			print_error(-1);
 		str = join_lines(str, line);
-		if (j == 4)
+		if (count == 4)
 		{
 			if (!(s[i] = ft_strsub(str, 0, ft_strlen(str))))
 				print_error(-3);
 			printf("%s\n", s[i]);
 			ft_strdel(&str);
-			j = 0;
+			count = 0;
 			i++;
 		}
-		if (ft_strlen(line) == 0)
-		{
-			j = 0;
-			printf("hii");
-			k++;
-		}
-		if (k > 1)
-			print_error(-1);
+	if (ft_strlen(line) == 0)
+	{
+		get_next_line(fd, &line)
+	//		k++;
+	//	}
+	//	if (k > 1)
+	//		print_error(-1);
 		free(line);
 	}
 	if (get_next_line(fd, &line) == -1)
