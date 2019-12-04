@@ -6,7 +6,7 @@
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 12:30:30 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 12:51:46 by phakakos         ###   ########.fr        #
+#    Updated: 2019/12/04 13:10:18 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,6 @@ clean :
 fclean : clean
 #		
 ofiles :
-		echo "$(BIGO)"
+		$(BIGO)
 
 re : fclean all
