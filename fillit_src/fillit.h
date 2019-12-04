@@ -5,18 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 16:55:37 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 13:08:40 by phakakos         ###   ########.fr       */
+/*   Created: 2019/12/04 14:47:56 by phakakos          #+#    #+#             */
+/*   Updated: 2019/12/04 14:47:59 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
-
 # include "libft.h"
 # include <stdlib.h>
 # include <fcntl.h>
-
 
 typedef struct	s_tetrimino
 {

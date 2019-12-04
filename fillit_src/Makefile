@@ -5,25 +5,27 @@
 #                                                     +:+ +:+         +:+      #
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/04 12:30:30 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 13:10:18 by phakakos         ###   ########.fr        #
+#    Created: 2019/12/04 14:46:06 by phakakos          #+#    #+#              #
+#    Updated: 2019/12/04 14:47:21 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-INC = -I ../libft 
-FLAGS = -Wall -Wextra -Werror
-SRCS = main.c map.c 
-BIGO = main.o map.o 
+SRC = main.c map.c
+OBJECTS = main.o map.o
+INC = get_next_line.h
 
-all : $(NAME)
+all: $(NAME)
+	
+$(NAME):
+	gcc -c -Wextra -Werror -Wall $(SRC) -I $(INC)
+	gcc -Wall -Wextra -Werror $(OBJECTS) -o $(NAME) -L ../libft/ -lft
 
-$(NAME) :
-		gcc $(FLAGS) $(INC) $(SRCS) -c
-#		gcc $(FLAGS) -o $(NAME) $(BIGO)
+clean:
+	rm -f $(OBJECTS)
 
-clean :
-		rm -f $(BIGO)
+fclean: clean
+	rm -f $(NAME)
 
 fclean : clean
 #		

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 18:33:42 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 13:08:00 by phakakos         ###   ########.fr       */
+/*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
+/*   Updated: 2019/12/04 14:48:34 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	map_space(char *map, t_tetrimino *current, int i)
 
 	dot = 0;
 	blocks = 0;
+	dot = 0;
 	while (current)
 	{
 		current = current->next;
