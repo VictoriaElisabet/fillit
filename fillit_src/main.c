@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 14:49:02 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:56:33 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 void	print_error(int i)
 {
 	if (i == -1)
-		write(2, "error", 5);
+		ft_puterr("error");
 	else if (i == -2 )
-		write(1, "usage: fillit input_file", 24);
+		ft_putstr("usage: fillit input_file");
 	else if (i == -3)
-		write(2, "error: allocation failed", 24);
+		ft_puterr("error: allocation failed");
 	exit(0);
 }
 
@@ -73,17 +73,20 @@ void	create_list(int a[26][4])
 	}
 }
 
-int	check_line(char *line, int fd, int count)
+int	check_line(char *line)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
-	fd = 0;
-	if (ft_strlen(line) == 0)
-	{
-		count = 0;
-		return (1);
-	}
+	//while (ft_strlen(line) == 0)
+	//{
+	//	j++;
+	//	printf("%d\n", j);
+	//	if (j > 1)
+	//		return (1);
+	//}
 	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
@@ -267,41 +270,45 @@ char	*join_lines(char *str, char *line)
 
 void	check_file(int fd)
 {
+//	int ret;
 	char *line;
 	int i;
-	static int count;
-	int k;
+	int j;
 	static char *str;
-	//char *tmp;
 	char *s[27];
+	char *tmp;
 
 	i = 0;
-	count = 0;
-	k = 0;
-	while (get_next_line(fd, &line) > 0)
+	j = 0;
+	if (fd < 0)
+		print_error(-1);
+	while(get_next_line(fd, &line) > 0)
 	{
-		count++;
-		if(check_line(line, fd, count) == -1)
-			print_error(-1);
-		str = join_lines(str, line);
-		if (count == 4)
+		j++;
+		while (get_next_line(fd, &line) > 0 && j <= 4)
 		{
-			if (!(s[i] = ft_strsub(str, 0, ft_strlen(str))))
-				print_error(-3);
-			printf("%s\n", s[i]);
-			ft_strdel(&str);
-			count = 0;
-			i++;
+			j++;
+			if(check_line (line) == -1)
+				print_error(-1);			
+			if (str == NULL)
+				if (!(str = ft_strnew(0)))
+					print_error(-3);
+		if (!(tmp = ft_strjoin(str, line)))
+			print_error(-3);
+		ft_strdel(&str);
+		str = tmp;
 		}
-	if (ft_strlen(line) == 0)
-	{
-		get_next_line(fd, &line)
-	//		k++;
-	//	}
-	//	if (k > 1)
-	//		print_error(-1);
-		free(line);
+		if(ft_strlen(line) != 0)
+			print_error(-1);
+		else if (ft_strlen(line) == 0)
+		{
+			get_next_line(fd, &line);
+			if(ft_strlen(line) == 0)
+				print_error(-1);
+			j = 0;
+		}
 	}
+
 	if (get_next_line(fd, &line) == -1)
 		print_error(-1);
 	check_tetrimino_characters(s);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/17 10:52:00 by vgrankul          #+#    #+#              #
-#    Updated: 2019/12/04 13:49:40 by vgrankul         ###   ########.fr        #
+#    Created: 2019/12/04 14:46:06 by phakakos          #+#    #+#              #
+#    Updated: 2019/12/04 14:47:21 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,4 +27,9 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+fclean : clean
+#		
+ofiles :
+		$(BIGO)
+
+re : fclean all

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 18:33:42 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 13:39:26 by vgrankul         ###   ########.fr       */
+/*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
+/*   Updated: 2019/12/04 14:48:34 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int block_amount(t_tetrimino *start)
 	return (total);
 }
 
-static char *make_map(int size)
+static char	*make_map(int size)
 {
 	char	*map;
 	int		total;
@@ -61,6 +61,7 @@ static int	map_space(char *map, t_tetrimino *current, int i)
 	int blocks;
 	int dot;
 
+	dot = 0;
 	blocks = 0;
 	dot = 0;
 	while (current)
