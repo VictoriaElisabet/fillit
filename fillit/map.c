@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:33:42 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/03 13:45:50 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:17:18 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,88 @@ static void map_undo(char **map, char c, char rep)
 			map[0][i] = rep;
 		i++;
 	}
+}
+
+static int	map_space(char *map, t_tetrimino *current, int i)
+{
+	int blocks;
+	int dot;
+
+	blocks = 0;
+	while (current)
+	{
+		current = current->next;
+		blocks++;
+	}
+	while (map[i])
+	{
+		if (map[i] == '.')
+			dot++;
+		i++;
+	}
+	if (blocks * 4 > dots)
+		return (0);
+	else
+		return (0);
+}
+
+static int	map_place(t_tetrimino *block, char *map, int y, int size)
+{
+	int i;
+	int map_s;
+
+	i = 0;
+	size++;
+	map_s = ft_strlen(map) - 1;
+	if (y + block->arr[3] / 4 * size + block->arr[i] % 4 - 4 > map_s)
+		return (0);
+	while (i < 4)
+	{
+		if (map[y + block->arr[i] / 4 * size + block->arr[i] % 4 - 4] == '.')
+			map[y + block->arr[i] / 4 * size + block->arr[i] % 4 - 4] = block->c;
+		else
+		{
+			map_undo(&map, block->c, '.');
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+/*
+ * first call with *start, 0, NULL, 0
+ */
+
+int		map_solve(t_tetrimino *current, int size, char *map, int i)
+{
+	if (size == 0)
+		size = block_amount(start);
+	if (!map)
+		map = make_map(size);
+	if (map_space(map, current, i))
+	{
+		if (map_place(current, map, i, size))
+		{
+			if (!current->next)
+			{
+				ft_putstr(map);
+				ft_strdel(map);
+				return (1);
+			}
+			if (!map_solve(current->next, size, map, 0))
+			{
+				map_undo(&map, current->c, '.');
+				return (map_solve(current, size, map, i + 1));
+			}
+		}
+		else
+			return (map_solve(current, size, map, i + 1));
+	}
+	else if (!ft_strchr(map, 'A'))
+	{
+		ft_strdel(map);
+		return (map_solve(current, size + 1, NULL, 0));
+	}
+	return (0);
 }
