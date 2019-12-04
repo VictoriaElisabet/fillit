@@ -3,31 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
+#    By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/04 12:30:30 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 12:51:46 by phakakos         ###   ########.fr        #
+#    Created: 2019/10/17 10:52:00 by vgrankul          #+#    #+#              #
+#    Updated: 2019/12/04 13:49:40 by vgrankul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-INC = -I ../libft 
-FLAGS = -Wall -Wextra -Werror
-SRCS = main.c map.c 
-BIGO = main.o map.o 
+SRC = main.c map.c
+OBJECTS = main.o map.o
+INC = get_next_line.h
 
-all : $(NAME)
+all: $(NAME)
+	
+$(NAME):
+	gcc -c -Wextra -Werror -Wall $(SRC) -I $(INC)
+	gcc -Wall -Wextra -Werror $(OBJECTS) -o $(NAME) -L ../libft/ -lft
 
-$(NAME) :
-		gcc $(FLAGS) $(INC) $(SRCS) -c
-#		gcc $(FLAGS) -o $(NAME) $(BIGO)
+clean:
+	rm -f $(OBJECTS)
 
-clean :
-		rm -f $(BIGO)
+fclean: clean
+	rm -f $(NAME)
 
-fclean : clean
-#		
-ofiles :
-		echo "$(BIGO)"
-
-re : fclean all
+re: fclean all
