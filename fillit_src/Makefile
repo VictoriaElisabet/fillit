@@ -6,14 +6,14 @@
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 14:46:06 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 14:47:21 by phakakos         ###   ########.fr        #
+#    Updated: 2019/12/04 14:52:51 by vgrankul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 SRC = main.c map.c
 OBJECTS = main.o map.o
-INC = get_next_line.h
+INC = ../libft
 
 all: $(NAME)
 	
