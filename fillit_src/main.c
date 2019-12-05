@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 13:06:53 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/04 16:16:58 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	create_list(int a[26][4])
 			append (&head, a[i], c + i);
 		i++;
 	}
+	map_solve(head, 0, NULL, 0);
 }
 
 int	check_line(char *line)
