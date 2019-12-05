@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 16:03:38 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:29:22 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,19 @@ void	fix_coordinates(int arr[26][4])
 	int p;
 
 	i = -1;
-	while (arr[++i][0] != -1)
+	while (++i < 26 && arr[i][0] != -1)
 	{
 		while (arr[i][0] > 3)
 		{
-			l = 0;
-			while (l < 4)
-				l += (arr[i][l] -= 4) ? 1 : 1;
+			l = -1;
+			while (++l < 4)
+				arr[i][l] -= 4;
 		}
 		p = 3;
 		while (p != 0 && (l = -1))
 		{
 			while (++l < 4)
-				p = arr[i][l] % 4 < p ? arr[i][l] % 4 : p;
+				p = arr[i][l] % 4 == 0 ? 0 : p;
 			if (p != 0 && !(l = 0))
 				while (l < 4)
 					l += (arr[i][l] -= 1) ? 1 : 1;
@@ -129,10 +129,9 @@ void	check_coordinates(char **s)
 
 	i = -1;
 	k = 0;
-	while (s[++i])
+	while (s[++i] && !(l = 0))
 	{
 		j = -1;
-		l = 0;
 		while (s[i][++j] != '\0')
 		{
 			if (s[i][j] == '#')
@@ -142,7 +141,8 @@ void	check_coordinates(char **s)
 		k++;
 	}
 	ft_strdel(s);
-	arr[k][0] = -1;
+	if (k < 26)
+		arr[k][0] = -1;
 	fix_coordinates(arr);
 	check_tetri(arr);
 	create_list(arr);
@@ -236,15 +236,12 @@ void	check_tetrimino_characters(char **str)
 char	*join_lines(char *str, char **line)
 {
 	char *tmp;
-	
-	if (str == NULL)
-		if (!(str = ft_strnew(0)))
-			print_error(-3);
+
 	if (!(tmp = ft_strjoin(str, *line)))
 		print_error(-3);
 	ft_strdel(&str);
 	str = tmp;
-	free(*line);
+	ft_strdel(line);
 	return (str);
 }
 
@@ -267,7 +264,7 @@ void	check_file(int fd)
 		if (j == 4)
 		{
 			str = ((s[i++] = str)) ? NULL : NULL;
-			printf("%s %d\n", s[0], i);
+//			printf("%s %d\n", s[i - 1], i);
 		}
 	}
 	if (i < 26 && get_next_line(fd, &line) > 0)

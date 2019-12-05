@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 15:58:00 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:28:19 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,12 @@ static int	map_place(char *map, t_tetrimino *block, int y, int size)
 	while (i < 4)
 	{
 		z = block->arr[i] / 4 * size + block->arr[i] % 4 - 4;
-		if (map[y + z] == '.')
+//		z = block->arr[i] > 3 ? block->arr[i] / 4 * size + block->arr[i] % 4 - 4 : block->arr[i];
+//		if (block->arr[i] < 4)
+//			z += 4;
+//ft_putnbr(z);
+//ft_putchar('\n');
+		if ((y + z) >= 0 &&map[y + z] == '.')
 			map[y + z] = block->c;
 		else
 		{
@@ -85,16 +90,16 @@ system("clear");
 int			map_solve(t_tetrimino *current, int size, char *map, int i)
 {
 	if (size == 0)
-		size = block_amount(current);
+		size = block_amount(current); /// 2;
 	if (!map)
-		map = make_map(size);
-system("clear");
-ft_putstr(map);
-usleep(100000);
+		map = make_map(size * 4);
 	if (map[i] && map_space(map, current))
 	{
-		if (map_place(map, current, i, size))
+		if (map_place(map, current, i, ft_strclen(map, '\n')))
 		{
+//system("clear");
+//ft_putstr(map);
+//usleep(1000);
 			if (!current->next)
 				return (map_print(map));
 			if (!map_solve(current->next, size, map, 0))
@@ -108,6 +113,10 @@ usleep(100000);
 	}
 	else if (!ft_strchr(map, 'A'))
 	{
+system("clear");
+ft_putstr(map);
+ft_putnbr(size);
+usleep(200000);
 		ft_strdel(&map);
 		return (map_solve(current, size + 1, NULL, 0));
 	}
