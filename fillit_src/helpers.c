@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 12:35:27 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 12:37:58 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	block_del(t_tetrimino *start)
 {
-	t_tetrimino	next;
+	t_tetrimino	*next;
 
 	if (start)
 	{
