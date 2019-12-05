@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 15:43:30 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:58:00 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,24 @@ static void	map_undo(char **map, char c, char rep)
 	}
 }
 
-static int	map_space(char *map, t_tetrimino *current, int i)
+static int	map_space(char *map, t_tetrimino *current)
 {
 	int blocks;
 	int dot;
+	int i;
 
 	dot = 0;
 	blocks = 0;
+	i = -1;
 	while (current)
 	{
 		current = current->next;
 		blocks++;
 	}
-	while (map[i])
-	{
+	while (map[++i])
 		if (map[i] == '.')
 			dot++;
-		i++;
-	}
-	if (blocks * 4 > dot)
-		return (0);
-	else
-		return (1);
+	return (blocks * 4 > dot ? 0 : 1);
 }
 
 static int	map_place(char *map, t_tetrimino *block, int y, int size)
@@ -62,8 +58,6 @@ static int	map_place(char *map, t_tetrimino *block, int y, int size)
 		return (0);
 	while (i < 4)
 	{
-	//	if (block->arr[i] < 4 && map[y + block->arr[i]] == '.')
-	//		map[y + block->arr[i]] = block->c;
 		z = block->arr[i] / 4 * size + block->arr[i] % 4 - 4;
 		if (map[y + z] == '.')
 			map[y + z] = block->c;
@@ -97,7 +91,7 @@ int			map_solve(t_tetrimino *current, int size, char *map, int i)
 system("clear");
 ft_putstr(map);
 usleep(100000);
-	if (map_space(map, current, 0))
+	if (map[i] && map_space(map, current))
 	{
 		if (map_place(map, current, i, size))
 		{
