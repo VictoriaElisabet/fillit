@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 18:28:49 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:16:57 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,26 @@ int		block_amount(t_tetrimino *start)
 		start = start->next;
 	total = start->c - 'A' + 1;
 	return (total);
+}
+
+int		check_spot(char *map, int i)
+{
+	int llen;
+	int	free;
+	int	len;
+
+	llen = ft_strclen(map, '\n');
+	len = ft_strlen(map);
+	free = 4;
+	if (i - llen >= 0 && map[i - llen] != '.')
+		free--;
+	if (i - 1 >= 0 && map[i - 1] != '.')
+		free--;
+	if (i + 1 < len && map[i + 1] != '.')
+		free--;
+	if (i + llen < len && map[i + llen] != '.')
+		free--;
+	return (free);
 }
 
 char	*make_map(int size)

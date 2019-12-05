@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 18:28:19 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:22:08 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	map_space(char *map, t_tetrimino *current)
 		blocks++;
 	}
 	while (map[++i])
-		if (map[i] == '.')
+		if (map[i] == '.' && check_spot(map, i) > 0)
 			dot++;
 	return (blocks * 4 > dot ? 0 : 1);
 }
@@ -89,11 +89,9 @@ system("clear");
 
 int			map_solve(t_tetrimino *current, int size, char *map, int i)
 {
-	if (size == 0)
-		size = block_amount(current); /// 2;
-	if (!map)
-		map = make_map(size * 4);
-	if (map[i] && map_space(map, current))
+	size = size == 0 ? block_amount(current) : size;
+	map = !map ? map = make_map(size * 4) : map;
+	while (map[i] && map_space(map, current))
 	{
 		if (map_place(map, current, i, ft_strclen(map, '\n')))
 		{
@@ -105,18 +103,20 @@ int			map_solve(t_tetrimino *current, int size, char *map, int i)
 			if (!map_solve(current->next, size, map, 0))
 			{
 				map_undo(&map, current->c, '.');
-				return (map_solve(current, size, map, i + 1));
+				i++;//return (map_solve(current, size, map, i + 1));
 			}
 		}
 		else
-			return (map_solve(current, size, map, i + 1));
+			i++;
+		//else
+		//	return (map_solve(current, size, map, i + 1));
 	}
-	else if (!ft_strchr(map, 'A'))
+	if (!ft_strchr(map, 'A'))
 	{
-system("clear");
-ft_putstr(map);
-ft_putnbr(size);
-usleep(200000);
+//system("clear");
+//ft_putstr(map);
+//ft_putnbr(size);
+//usleep(200000);
 		ft_strdel(&map);
 		return (map_solve(current, size + 1, NULL, 0));
 	}

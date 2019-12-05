@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:59:37 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 15:08:27 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:12:15 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int				map_solve(t_tetrimino *current, int size, char *map, int i);
 int				block_amount(t_tetrimino *start);
 char			*make_map(int size);
 void			check_tetri(int arr[26][4]);
+int				check_spot(char *map, int i);
 
 #endif
