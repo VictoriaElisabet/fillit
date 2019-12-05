@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 15:11:34 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:24:24 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	check_tetri(int arr[26][4])
 				if (y == i)
 					continue ;
 				conn += arr[k][i] - 4 == arr[k][y] ? 1 : 0;
-				conn += arr[k][i] - 1 == arr[k][y] ? 1 : 0;
-				conn += arr[k][i] + 1 == arr[k][y] ? 1 : 0;
+				conn += (arr[k][i] - 1 == arr[k][y]) && (arr[k][i] % 4 != 0) ? 1 : 0;
+				conn += (arr[k][i] + 1 == arr[k][y]) && (arr[k][i] % 4 != 3) ? 1 : 0;
 				conn += arr[k][i] + 4 == arr[k][y] ? 1 : 0;
 			}
 		}
