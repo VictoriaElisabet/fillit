@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 15:40:17 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/05 16:03:38 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,12 +267,12 @@ void	check_file(int fd)
 		if (j == 4)
 		{
 			str = ((s[i++] = str)) ? NULL : NULL;
-			printf("%s\n", s[0]);
+			printf("%s %d\n", s[0], i);
 		}
 	}
-	if (i < 25 && get_next_line(fd, &line) > 0)
+	if (i < 26 && get_next_line(fd, &line) > 0)
 			ft_strlen(line) == 0 ? check_file(fd) : print_error(-1);
-	else if (i > 25)
+	else if (i > 26)
 		print_error(-1);
 	check_tetrimino_characters(s);	
 	check_coordinates(s);

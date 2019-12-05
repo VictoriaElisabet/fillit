@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 15:24:24 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 16:13:35 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	check_tetri(int arr[26][4])
 	int k;
 
 	k = -1;
-	while (arr[++k][0] != -1 && !(conn = 0))
+	while (arr[++k][0] != -1 && k < 26 && !(conn = 0))
 	{
 		i = -1;
 		while (++i < 4)
