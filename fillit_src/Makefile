@@ -3,22 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
+#    By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/04 14:46:06 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 17:48:34 by phakakos         ###   ########.fr        #
+#    Created: 2019/10/17 10:52:00 by vgrankul          #+#    #+#              #
+#    Updated: 2019/12/04 18:07:12 by vgrankul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-SRC = main.c map.c helpers.c
-OBJECTS = main.o map.o helpers.o
-INC = ../libft
+SRC = main.c
+OBJECTS = main.o
+INC = ../libft/libft.h
 
 all: $(NAME)
 	
 $(NAME):
 	gcc -c -Wextra -Werror -Wall $(SRC) -I $(INC)
+	gcc -Wall -Wextra -Werror $(OBJECTS) -o $(NAME) -L ../libft/ -lft
 
 clean:
 	rm -f $(OBJECTS)
@@ -26,9 +27,4 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-fclean : clean
-#		
-ofiles :
-		$(OBJECTS)
-
-re : fclean all
+re: fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 16:16:58 by phakakos         ###   ########.fr       */
+/*   Created: 2019/12/05 14:03:03 by phakakos          #+#    #+#             */
+/*   Updated: 2019/12/05 14:30:30 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ int	check_line(char *line)
 	int i;
 
 	i = 0;
-	if (ft_strlen(line) == 0)
-		return (1);
 	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
@@ -98,37 +96,24 @@ void	fix_coordinates(int arr[26][4])
 	int l;
 	int p;
 
-	i = 0;
-	while (arr[i][0] != -1)
+	i = -1;
+	while (arr[++i][0] != -1)
 	{
 		while (arr[i][0] > 3)
 		{
 			l = 0;
 			while (l < 4)
-			{
-				arr[i][l] -= 4;
-				l++;
-			}
+				l += (arr[i][l] -= 4) ? 1 : 1;
 		}
 		p = 3;
-		while (p != 0)
+		while (p != 0 && (l = -1))
 		{
-			l = 0;
-			while (l < 4)
-			{
-				if (arr[i][l] % 4 < p)
-					p = arr[i][l] % 4;
-				l++;
-			}
-			l = 0;
-			if (p != 0)
+			while (++l < 4)
+				p = arr[i][l] % 4 < p ? arr[i][l] % 4 : p;
+			if (p != 0 && !(l = 0))
 				while (l < 4)
-				{
-					arr[i][l] -= 1;
-					l++;
-				}
+					l += (arr[i][l] -= 1) ? 1 : 1;
 		}
-		i++;
 	}
 }
 
@@ -140,31 +125,27 @@ void	check_coordinates(char **s)
 	int k;
 	int l;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	k = 0;
-	l = 0;
-	while (s[i])
+	while (s[++i])
 	{
-		j = 0;
+		j = -1;
 		l = 0;
-		while (s[i][j] != '\0')
+		while (s[i][++j] != '\0')
 		{
 			if (s[i][j] == '#')
-			{
-				arr[k][l] = j;
-				l++;
-			}
-			j++;
+				l += (arr[k][l] = j) ? 1 : 1;
 		}
-		i++;
+		free(s[i]);
 		k++;
 	}
 	ft_strdel(s);
 	arr[k][0] = -1;
 	fix_coordinates(arr);
+	check_tetri(arr);
 	create_list(arr);
 }
+/*
 int	check_blocks(char **str)
 {
 	int i;
@@ -196,6 +177,7 @@ int	check_blocks(char **str)
 	}
 	return (-1);	
 }
+
 void	check_tetrimino(char **str)
 {
 	int i;
@@ -223,6 +205,7 @@ void	check_tetrimino(char **str)
 		i++;
 	}
 }
+*/
 void	check_tetrimino_characters(char **str)
 {
 	int i;
@@ -246,63 +229,48 @@ void	check_tetrimino_characters(char **str)
 		}
 		i++;
 	}
-	check_tetrimino(str);
+	//check_tetrimino(str);
 }
-char	*join_lines(char *str, char *line)
+char	*join_lines(char *str, char **line)
 {
 	char *tmp;
 	
 	if (str == NULL)
 		if (!(str = ft_strnew(0)))
 			print_error(-3);
-	if (!(tmp = ft_strjoin(str, line)))
+	if (!(tmp = ft_strjoin(str, *line)))
 		print_error(-3);
 	ft_strdel(&str);
 	str = tmp;
+	free(*line);
 	return (str);
 }
 
 void	check_file(int fd)
 {
 	char *line;
-	int i;
+	static int i;
 	int j;
-	int k;
-	static char *str;
-	//char *tmp;
+	char *str;
 	char *s[27];
 
-	i = 0;
 	j = 0;
-	k = 0;
-	while (get_next_line(fd, &line) > 0)
+	str = NULL;
+	while(j < 4)
 	{
 		j++;
-		if(check_line(line) == -1)
+		if (get_next_line(fd, &line) != 1 || check_line(line) == -1)
 			print_error(-1);
-		str = join_lines(str, line);
+		str = join_lines(str, &line);
 		if (j == 4)
-		{
-			if (!(s[i] = ft_strsub(str, 0, ft_strlen(str))))
-				print_error(-3);
-			printf("%s\n", s[i]);
-			ft_strdel(&str);
-			j = 0;
-			i++;
-		}
-		if (ft_strlen(line) == 0)
-		{
-			j = 0;
-			printf("hii");
-			k++;
-		}
-		if (k > 1)
-			print_error(-1);
-		free(line);
+			str = ((s[i++] = str)) ? NULL : NULL;
 	}
-	if (get_next_line(fd, &line) == -1)
+	if (i < 25 && get_next_line(fd, &line) > 0)
+			ft_strlen(line) == 0 ? check_file(fd) : print_error(-1);
+	else if (i > 25)
 		print_error(-1);
-	check_tetrimino_characters(s);
+	s[i] = NULL;
+	check_tetrimino_characters(s);	
 	check_coordinates(s);
 }
 
