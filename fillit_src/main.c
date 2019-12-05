@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 14:19:00 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 14:57:52 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	create_list(int a[26][4])
 			append (&head, a[i], c + i);
 		i++;
 	}
+	map_solve(head, 0, NULL, 0);
 }
 
 int	check_line(char *line)
@@ -95,37 +96,24 @@ void	fix_coordinates(int arr[26][4])
 	int l;
 	int p;
 
-	i = 0;
-	while (arr[i][0] != -1)
+	i = -1;
+	while (arr[++i][0] != -1)
 	{
 		while (arr[i][0] > 3)
 		{
 			l = 0;
 			while (l < 4)
-			{
-				arr[i][l] -= 4;
-				l++;
-			}
+				l += (arr[i][l] -= 4) ? 1 : 1;
 		}
 		p = 3;
-		while (p != 0)
+		while (p != 0 && (l = -1))
 		{
-			l = 0;
-			while (l < 4)
-			{
-				if (arr[i][l] % 4 < p)
-					p = arr[i][l] % 4;
-				l++;
-			}
-			l = 0;
-			if (p != 0)
+			while (++l < 4)
+				p = arr[i][l] % 4 < p ? arr[i][l] % 4 : p;
+			if (p != 0 && !(l = 0))
 				while (l < 4)
-				{
-					arr[i][l] -= 1;
-					l++;
-				}
+					l += (arr[i][l] -= 1) ? 1 : 1;
 		}
-		i++;
 	}
 }
 
@@ -137,31 +125,27 @@ void	check_coordinates(char **s)
 	int k;
 	int l;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	k = 0;
-	l = 0;
-	while (s[i])
+	while (s[++i])
 	{
-		j = 0;
+		j = -1;
 		l = 0;
-		while (s[i][j] != '\0')
+		while (s[i][++j] != '\0')
 		{
 			if (s[i][j] == '#')
-			{
-				arr[k][l] = j;
-				l++;
-			}
-			j++;
+				l += (arr[k][l] = j) ? 1 : 1;
 		}
-		i++;
+		free(s[i]);
 		k++;
 	}
-	//ft_strdel(s);
+	ft_strdel(s);
 	arr[k][0] = -1;
 	fix_coordinates(arr);
+	check_tetri(arr);
 	create_list(arr);
 }
+/*
 int	check_blocks(char **str)
 {
 	int i;
@@ -193,6 +177,7 @@ int	check_blocks(char **str)
 	}
 	return (-1);	
 }
+
 void	check_tetrimino(char **str)
 {
 	int i;
@@ -220,6 +205,7 @@ void	check_tetrimino(char **str)
 		i++;
 	}
 }
+*/
 void	check_tetrimino_characters(char **str)
 {
 	int i;
@@ -243,7 +229,7 @@ void	check_tetrimino_characters(char **str)
 		}
 		i++;
 	}
-	check_tetrimino(str);
+	//check_tetrimino(str);
 }
 char	*join_lines(char *str, char **line)
 {
