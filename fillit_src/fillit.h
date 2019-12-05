@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:47:56 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 17:49:13 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 12:35:24 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void			block_del(t_tetrimino *start);
 int				map_solve(t_tetrimino *current, int size, char *map, int i);
 int				block_amount(t_tetrimino *start);
 char			*make_map(int size);
+int				check_tetri(t_tetrimino *block);
 
 #endif
