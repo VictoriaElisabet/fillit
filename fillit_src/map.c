@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/04 18:34:13 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:43:30 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	map_print(char *map)
 system("clear");
 	ft_putstr(map);
 	ft_strdel(&map);
+	exit(0);
 	return (1);
 }
 
@@ -96,7 +97,7 @@ int			map_solve(t_tetrimino *current, int size, char *map, int i)
 system("clear");
 ft_putstr(map);
 usleep(100000);
-	if (map_space(map, current, i))
+	if (map_space(map, current, 0))
 	{
 		if (map_place(map, current, i, size))
 		{

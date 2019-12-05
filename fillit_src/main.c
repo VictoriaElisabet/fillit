@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 15:07:24 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:40:17 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	check_line(char *line)
 	int i;
 
 	i = 0;
+	if (!line)
+		return (-1);
 	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
@@ -252,7 +254,7 @@ void	check_file(int fd)
 	static int i;
 	int j;
 	char *str;
-	char *s[27];
+	static char *s[27];
 
 	j = 0;
 	str = NULL;
@@ -263,13 +265,15 @@ void	check_file(int fd)
 			print_error(-1);
 		str = join_lines(str, &line);
 		if (j == 4)
+		{
 			str = ((s[i++] = str)) ? NULL : NULL;
+			printf("%s\n", s[0]);
+		}
 	}
 	if (i < 25 && get_next_line(fd, &line) > 0)
 			ft_strlen(line) == 0 ? check_file(fd) : print_error(-1);
 	else if (i > 25)
 		print_error(-1);
-	s[i] = NULL;
 	check_tetrimino_characters(s);	
 	check_coordinates(s);
 }
