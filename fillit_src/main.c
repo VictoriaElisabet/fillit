@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/04 17:56:33 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/05 13:57:36 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,8 @@ void	create_list(int a[26][4])
 int	check_line(char *line)
 {
 	int i;
-	int j;
 
-	j = 0;
 	i = 0;
-	//while (ft_strlen(line) == 0)
-	//{
-	//	j++;
-	//	printf("%d\n", j);
-	//	if (j > 1)
-	//		return (1);
-	//}
 	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
 		return (-1);
 	while (line[i] != '\0')
@@ -166,7 +157,7 @@ void	check_coordinates(char **s)
 		i++;
 		k++;
 	}
-	ft_strdel(s);
+	//ft_strdel(s);
 	arr[k][0] = -1;
 	fix_coordinates(arr);
 	create_list(arr);
@@ -254,64 +245,46 @@ void	check_tetrimino_characters(char **str)
 	}
 	check_tetrimino(str);
 }
-char	*join_lines(char *str, char *line)
+char	*join_lines(char *str, char **line)
 {
 	char *tmp;
 	
 	if (str == NULL)
 		if (!(str = ft_strnew(0)))
 			print_error(-3);
-	if (!(tmp = ft_strjoin(str, line)))
+	if (!(tmp = ft_strjoin(str, *line)))
 		print_error(-3);
 	ft_strdel(&str);
 	str = tmp;
+	free(*line);
 	return (str);
 }
 
 void	check_file(int fd)
 {
-//	int ret;
 	char *line;
-	int i;
+	static int i;
 	int j;
-	static char *str;
+	char *str;
 	char *s[27];
-	char *tmp;
 
-	i = 0;
 	j = 0;
-	if (fd < 0)
-		print_error(-1);
-	while(get_next_line(fd, &line) > 0)
+	str = NULL;
+	while(j < 4)
 	{
 		j++;
-		while (get_next_line(fd, &line) > 0 && j <= 4)
-		{
-			j++;
-			if(check_line (line) == -1)
-				print_error(-1);			
-			if (str == NULL)
-				if (!(str = ft_strnew(0)))
-					print_error(-3);
-		if (!(tmp = ft_strjoin(str, line)))
-			print_error(-3);
-		ft_strdel(&str);
-		str = tmp;
-		}
-		if(ft_strlen(line) != 0)
+		if (get_next_line(fd, &line) != 1 || check_line(line) == -1)
 			print_error(-1);
-		else if (ft_strlen(line) == 0)
-		{
-			get_next_line(fd, &line);
-			if(ft_strlen(line) == 0)
-				print_error(-1);
-			j = 0;
-		}
+		str = join_lines(str, &line);
+		if (j == 4)
+			str = ((s[i++] = str)) ? NULL : NULL;
 	}
-
-	if (get_next_line(fd, &line) == -1)
+	if (i < 25 && get_next_line(fd, &line) > 0)
+			ft_strlen(line) == 0 ? check_file(fd) : print_error(-1);
+	else if (i > 25)
 		print_error(-1);
-	check_tetrimino_characters(s);
+	s[i] = NULL;
+	check_tetrimino_characters(s);	
 	check_coordinates(s);
 }
 
