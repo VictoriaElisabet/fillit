@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/05 12:37:58 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 14:29:50 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,31 @@ char	*make_map(int size)
 	return (map);
 }
 
-int		check_tetri(t_tetrimino *block)
+void	check_tetri(int arr[26][4])
 {
 	int	conn;
 	int i;
 	int y;
+	int k;
 
-	i = 0;
-	conn = 0;
-	while (i < 4)
+	k = -1;
+	while (arr[++k][0] != -1 && !(conn = 0))
 	{
-		y = 0;
-		while (y < 4)
+		i = -1;
+		while (++i < 4)
 		{
-			if (y == i)
+			y = -1;
+			while (++y < 4)
 			{
-				y++;
-				continue ;
+				if (y == i)
+					continue ;
+				conn += arr[i] - 4 == arr[y] ? 1 : 0;
+				conn += arr[i] - 1 == arr[y] ? 1 : 0;
+				conn += arr[i] + 1 == arr[y] ? 1 : 0;
+				conn += arr[i] + 4 == arr[y] ? 1 : 0;
 			}
-			conn += block->arr[i] - 4 == block->arr[y] ? 1 : 0;
-			conn += block->arr[i] - 1 == block->arr[y] ? 1 : 0;
-			conn += block->arr[i] + 1 == block->arr[y] ? 1 : 0;
-			conn += block->arr[i] + 4 == block->arr[y] ? 1 : 0;
-			y++;
 		}
-		i++;
+		if (conn != 6 && conn != 8) 
+			print_error(-1);
 	}
-	return ((conn == 6) || (conn == 8) ? 1 : 0);
 }
