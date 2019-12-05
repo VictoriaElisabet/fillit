@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/05 14:57:52 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:07:24 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	check_coordinates(char **s)
 			if (s[i][j] == '#')
 				l += (arr[k][l] = j) ? 1 : 1;
 		}
-		free(s[i]);
+//		free(s[i]);
 		k++;
 	}
 	ft_strdel(s);
