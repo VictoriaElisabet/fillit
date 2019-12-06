@@ -6,7 +6,7 @@
 #    By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 10:52:00 by vgrankul          #+#    #+#              #
-#    Updated: 2019/12/06 13:21:57 by vgrankul         ###   ########.fr        #
+#    Updated: 2019/12/06 16:42:03 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,18 @@ all: $(NAME)
 	
 $(NAME):
 	gcc -c -Wextra -Werror -Wall $(SRC) -I $(INC)
+
+comp:
+	make -C ../libft re
 	gcc -Wall -Wextra -Werror $(OBJECTS) -o $(NAME) -L ../libft/ -lft
 
 clean:
 	rm -f $(OBJECTS)
 
+ofiles: 
+	$(OBJECTS)
+
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean all comp

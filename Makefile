@@ -6,7 +6,7 @@
 #    By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/29 17:01:28 by phakakos          #+#    #+#              #
-#    Updated: 2019/12/04 14:43:12 by phakakos         ###   ########.fr        #
+#    Updated: 2019/12/06 16:43:59 by phakakos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ clean :
 	make -C $(FILLIT) clean
 
 fclean : clean
-	rm $(NAME)
+	rm -f $(NAME)
 	make -C $(LIBFT) fclean
 
 re : fclean all
