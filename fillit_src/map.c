@@ -6,7 +6,11 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/12/06 13:40:02 by phakakos         ###   ########.fr       */
+=======
+/*   Updated: 2019/12/06 13:11:04 by vgrankul         ###   ########.fr       */
+>>>>>>> b246f8aca422a90dfb5ba03b2ccef65d0fb7b730
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +94,7 @@ int			map_solve(t_tetrimino *current, int size, char *map, int i)
 {
 	size = size == 0 ? block_amount(current) : size;
 	map = !map ? map = make_map(size * 4) : map;
+	i = 0;
 	while (map[i] && map_space(map, current))
 	{
 		if (map_place(map, current, i, ft_strclen(map, '\n')))
