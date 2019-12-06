@@ -6,13 +6,13 @@
 #    By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 10:52:00 by vgrankul          #+#    #+#              #
-#    Updated: 2019/12/05 15:08:44 by phakakos         ###   ########.fr        #
+#    Updated: 2019/12/06 13:21:57 by vgrankul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-SRC = main.c helpers.c map.c
-OBJECTS = main.o helpers.o map.o
+SRC = main.c helpers.c map.c create_list.c coordinates.c
+OBJECTS = main.o helpers.o map.o create_list.o coordinates.o
 INC = ../libft/libft.h
 
 all: $(NAME)
