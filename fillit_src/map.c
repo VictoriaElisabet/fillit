@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/06 13:11:04 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/06 14:28:24 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ static int	map_print(char *map)
 system("clear");
 	ft_putstr(map);
 	ft_strdel(&map);
+	while(1)
+	{
+	}
 	exit(0);
 	return (1);
 }
