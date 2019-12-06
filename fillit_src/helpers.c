@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/06 13:16:42 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/06 15:31:18 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,10 @@ int		block_amount(t_tetrimino *start)
 	return (total);
 }
 
-int		check_spot(char *map, int i)
+int		check_spot(char *map, int i, int llen, int len)
 {
-	int llen;
 	int	free;
-	int	len;
 
-	llen = ft_strclen(map, '\n');
-	len = ft_strlen(map);
 	free = 4;
 	if (i - llen >= 0 && map[i - llen] != '.')
 		free--;
@@ -71,7 +67,7 @@ char	*make_map(int size)
 		print_error(-3);
 	ft_memset(map, '.', total - 1);
 	i = size;
-	while (i < (size * (size + 1)))
+	while (i < total)
 	{
 		map[i] = '\n';
 		i += size + 1;
@@ -96,27 +92,14 @@ void	check_tetri(int arr[26][4])
 			while (++y < 4)
 			{
 				conn += arr[k][i] - 4 == arr[k][y] ? 1 : 0;
-				conn += (arr[k][i] - 1 == arr[k][y]) && (arr[k][i] % 4 != 0) ? 1 : 0;
-				conn += (arr[k][i] + 1 == arr[k][y]) && (arr[k][i] % 4 != 3) ? 1 : 0;
+				conn += (arr[k][i] - 1 == arr[k][y]) &&
+					(arr[k][i] % 4 != 0) ? 1 : 0;
+				conn += (arr[k][i] + 1 == arr[k][y]) &&
+					(arr[k][i] % 4 != 3) ? 1 : 0;
 				conn += arr[k][i] + 4 == arr[k][y] ? 1 : 0;
 			}
 		}
-		if (conn != 6 && conn != 8) 
-			{
-//				ft_putnbr(conn);
-//				ft_putstr(" @ ");
-//				ft_putnbr(k);
-//				ft_putchar('\n');
-//
-//				ft_putnbr(arr[k][0]);
-//				ft_putchar(' ');
-//				ft_putnbr(arr[k][1]);
-//				ft_putchar(' ');
-//				ft_putnbr(arr[k][2]);
-//				ft_putchar(' ');
-//				ft_putnbr(arr[k][3]);
-
-				print_error(-1);
-			}
+		if (conn != 6 && conn != 8)
+			print_error(-1);
 	}
 }

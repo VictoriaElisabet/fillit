@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:59:37 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/06 13:22:12 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/06 15:31:57 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void			check_coordinates(char **s);
 void			create_list(int a[26][4]);
 
 char			*make_map(int size);
-char			*join_lines(char *str, char **line);
 
 int				map_solve(t_tetrimino *current, int size, char *map, int i);
 int				block_amount(t_tetrimino *start);
-int				check_spot(char *map, int i);
+int				check_spot(char *map, int i, int llen, int len);
 int				check_line(char *line);
 
 #endif
