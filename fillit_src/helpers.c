@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/06 15:31:18 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:32:26 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		check_spot(char *map, int i, int llen, int len)
 	return (free);
 }
 
-char	*make_map(int size)
+char	*make_map(int size, t_tetrimino *start)
 {
 	char	*map;
 	int		total;
@@ -64,7 +64,7 @@ char	*make_map(int size)
 	size = total;
 	total = size * (size + 1) + 1;
 	if (!(map = ft_strnew(total)))
-		print_error(-3);
+		print_error(-3, start, NULL);
 	ft_memset(map, '.', total - 1);
 	i = size;
 	while (i < total)
@@ -100,6 +100,6 @@ void	check_tetri(int arr[26][4])
 			}
 		}
 		if (conn != 6 && conn != 8)
-			print_error(-1);
+			print_error(-1, NULL, NULL);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:59:37 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/06 15:31:57 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:31:52 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_tetrimino
 	int		arr[4];
 }				t_tetrimino;
 
-void			print_error(int i);
+void			print_error(int i, t_tetrimino *start, char **s);
 void			block_del(t_tetrimino *start);
 void			check_file(int fd);
 void			check_tetri(int arr[26][4]);
@@ -31,7 +31,7 @@ void			check_tetrimino_characters(char **str);
 void			check_coordinates(char **s);
 void			create_list(int a[26][4]);
 
-char			*make_map(int size);
+char			*make_map(int size, t_tetrimino *start);
 
 int				map_solve(t_tetrimino *current, int size, char *map, int i);
 int				block_amount(t_tetrimino *start);

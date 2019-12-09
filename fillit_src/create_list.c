@@ -6,21 +6,20 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:59:48 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/06 13:35:42 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:33:32 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static	t_tetrimino	*create(char c, int a[4])
+static	t_tetrimino	*create(t_tetrimino *start, char c, int a[4])
 {
 	int			j;
 	t_tetrimino *new;
 
 	j = 0;
-	new = (t_tetrimino*)malloc(sizeof(t_tetrimino));
-	if (!new)
-		print_error(-3);
+	if (!(new = (t_tetrimino*)malloc(sizeof(t_tetrimino))))
+		print_error(-3, start, NULL);
 	while (j < 4)
 	{
 		new->arr[j] = a[j];
@@ -31,15 +30,15 @@ static	t_tetrimino	*create(char c, int a[4])
 	return (new);
 }
 
-static	void		append(t_tetrimino **head, int a[4], char c)
+static	void		append(t_tetrimino *head, int a[4], char c)
 {
 	t_tetrimino *cursor;
 	t_tetrimino *new;
 
-	cursor = *head;
+	cursor = head;
 	while (cursor->next != NULL)
 		cursor = cursor->next;
-	new = create(c, a);
+	new = create(head, c, a);
 	cursor->next = new;
 }
 
@@ -55,9 +54,9 @@ void				create_list(int a[26][4])
 	while (a[i][0] != -1)
 	{
 		if (!head)
-			head = create(c, a[i]);
+			head = create(head, c, a[i]);
 		else
-			append(&head, a[i], c + i);
+			append(head, a[i], c + i);
 		i++;
 	}
 	map_solve(head, 0, NULL, 0);

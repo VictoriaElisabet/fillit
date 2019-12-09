@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:17:12 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/06 13:38:12 by vgrankul         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:34:05 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void		check_coordinates(char **s)
 				l += (arr[k][l] = j) ? 1 : 1;
 		}
 		k++;
+		ft_strdel(&s[i]);
 	}
 	ft_strdel(s);
 	if (k < 26)
@@ -85,7 +86,7 @@ void		check_tetrimino_characters(char **str)
 			if (str[i][j] == '#')
 				count++;
 			if (count > 4 && count < 4)
-				print_error(-1);
+				print_error(-1, NULL, str);
 			j++;
 		}
 		i++;

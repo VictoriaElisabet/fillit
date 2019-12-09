@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:48:31 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/06 16:32:30 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/09 13:33:08 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ static void	map_undo(char **map, char c, char rep)
 	}
 }
 
-static int	map_space(char *map, t_tetrimino *current)
+static int	map_space(char *map, t_tetrimino *current, int len, int llen)
 {
 	int blocks;
 	int dot;
 	int i;
-	int len;
-	int llen;
 
 	dot = 0;
 	blocks = 0;
 	i = -1;
-	len = ft_strlen(map) - 1;
-	llen = ft_strclen(map, '\n');
+	len--;
 	while (current)
 	{
 		current = current->next;
@@ -63,7 +60,7 @@ static int	map_place(char *map, t_tetrimino *block, int y, int map_s)
 	while (i >= 0)
 	{
 		z = block->arr[i] / 4 * len_s + block->arr[i] % 4 - 4;
-		if ((y + z) >= 0 && map[y + z] == '.')
+		if (map[y + z] == '.')
 			map[y + z] = block->c;
 		else
 		{
@@ -86,14 +83,16 @@ static int	map_print(char *map)
 
 int			map_solve(t_tetrimino *current, int size, char *map, int i)
 {
+	int len;
 	int llen;
 
 	size = size == 0 ? block_amount(current) : size;
-	map = !map ? make_map(size * 4) : map;
-	llen = ft_strlen(map);
-	while (map[i] && map_space(map, current))
+	map = !map ? make_map(size * 4, current) : map;
+	len = ft_strlen(map);
+	llen = ft_strclen(map, '\n');
+	while (map[i] && map_space(map, current, len, llen))
 	{
-		if (map_place(map, current, i, llen))
+		if (map_place(map, current, i, len))
 		{
 			if (!current->next)
 				return (map_print(map));
