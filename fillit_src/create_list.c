@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:59:48 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/09 13:33:32 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:13:54 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void				create_list(int a[26][4])
 	char		c;
 	t_tetrimino *head;
 
-	c = 65;
+	c = 'A';
 	i = 0;
 	head = NULL;
-	while (a[i][0] != -1)
+	while (i < 26 && a[i][0] != -1)
 	{
 		if (!head)
 			head = create(head, c, a[i]);

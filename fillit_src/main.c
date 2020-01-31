@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 11:19:44 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/09 13:31:28 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:42:52 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void		print_error(int i, t_tetrimino *start, char **s)
 {
-	t_tetrimino	*curr;
-
-	curr = start;
 	if (i == -1 || i == -3)
 	{
 		ft_putstr("error\n");
-		if (curr)
+		if (start)
 			block_del(start);
 		if (s)
 			ft_strarrdel(s);
@@ -52,6 +49,8 @@ void		check_file(int fd)
 
 	j = 0;
 	str = NULL;
+	if (i > 25)
+		print_error(-1, NULL, s);
 	while (j < 4)
 	{
 		j++;
@@ -61,9 +60,9 @@ void		check_file(int fd)
 		if (j == 4)
 			s[i++] = str;
 	}
-	if (i < 26 && (j = get_next_line(fd, &line)) > 0)
+	if ((j = get_next_line(fd, &line)) > 0)
 		ft_strlen(line) == 0 ? check_file(fd) : print_error(-1, NULL, s);
-	else if (i > 26 || j == -1)
+	else if (j == -1)
 		print_error(-1, NULL, s);
 	check_tetrimino_characters(s);
 	check_coordinates(s);

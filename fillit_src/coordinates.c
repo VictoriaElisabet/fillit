@@ -6,7 +6,7 @@
 /*   By: vgrankul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:17:12 by vgrankul          #+#    #+#             */
-/*   Updated: 2019/12/09 13:34:05 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:13:35 by vgrankul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void		check_tetrimino_characters(char **str)
 	int count;
 
 	i = 0;
-	j = 0;
-	count = 0;
 	while (str[i] != NULL)
 	{
 		j = 0;
@@ -85,10 +83,10 @@ void		check_tetrimino_characters(char **str)
 		{
 			if (str[i][j] == '#')
 				count++;
-			if (count > 4 && count < 4)
-				print_error(-1, NULL, str);
 			j++;
 		}
+		if (count != 4)
+			print_error(-1, NULL, str);
 		i++;
 	}
 }
@@ -100,12 +98,18 @@ int			check_line(char *line)
 	i = 0;
 	if (!line)
 		return (-1);
-	if (ft_strlen(line) > 4 || ft_strlen(line) < 4)
+	if (ft_strlen(line) != 4)
+	{
+		ft_strdel(&line);
 		return (-1);
+	}
 	while (line[i] != '\0')
 	{
 		if (line[i] != '.' && line[i] != '#')
+		{
+			ft_strdel(&line);
 			return (-1);
+		}
 		i++;
 	}
 	return (1);

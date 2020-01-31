@@ -6,7 +6,7 @@
 /*   By: phakakos <phakakos@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:44:47 by phakakos          #+#    #+#             */
-/*   Updated: 2019/12/09 13:32:26 by phakakos         ###   ########.fr       */
+/*   Updated: 2019/12/12 13:36:27 by phakakos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,15 @@ int		block_amount(t_tetrimino *start)
 
 int		check_spot(char *map, int i, int llen, int len)
 {
-	int	free;
-
-	free = 4;
-	if (i - llen >= 0 && map[i - llen] != '.')
-		free--;
-	if (i - 1 >= 0 && map[i - 1] != '.')
-		free--;
-	if (i + 1 < len && map[i + 1] != '.')
-		free--;
-	if (i + llen < len && map[i + llen] != '.')
-		free--;
-	return (free);
+	if (i - llen >= 0 && map[i - llen] == '.')
+		return (1);
+	if (i - 1 >= 0 && map[i - 1] == '.')
+		return (1);
+	if (i + 1 < len && map[i + 1] == '.')
+		return (1);
+	if (i + llen < len && map[i + llen] == '.')
+		return (1);
+	return (0);
 }
 
 char	*make_map(int size, t_tetrimino *start)
@@ -58,7 +55,7 @@ char	*make_map(int size, t_tetrimino *start)
 	int		total;
 	int		i;
 
-	total = 1;
+	total = 2;
 	while (size > total * total)
 		total++;
 	size = total;
