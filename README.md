@@ -1,6 +1,6 @@
 # fillit
 
-So far one of the most funniest projects at Hive helsinki! The project was a collaboration project and my teammember for this project was Petrus Hakakoski
+So far one of the most funniest projects at Hive helsinki! The project was a collaboration project and my teammember for this project was [Petrus Hakakoski](https://github.com/RandommUser).
 
 The problem given for our fillit project was to create a program to assemble a set (maximum 26) of tetris(4 block geometric figure) into the smallest possible square.
 
