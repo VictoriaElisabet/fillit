@@ -29,4 +29,10 @@ Compile the executable fillit by running ```make all```.
 ./fillit [file_name]
 ```
 Result
+```
+ABB
+ABB
+AA.
+```
+
 
